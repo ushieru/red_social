@@ -1,7 +1,7 @@
 from operator import itemgetter
 import jwt
 from flask import Blueprint, request, current_app
-from src.controllers.users_controller import create_user, get_user_auth
+from src.controllers.auth_controller import create_user, get_user_auth
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -11,7 +11,7 @@ def register():
     json = request.get_json()
     name, email, password = itemgetter('name', 'email', 'password')(json)
     user = create_user(name, email, password)
-    return {'user': user.toJson()}
+    return user.toJson()
 
 
 @auth.route('/login', methods=['POST'])
@@ -23,4 +23,4 @@ def login():
         return {}, 400
     token = jwt.encode(
         user.toJson(), current_app.config['JWT_SECRET'], algorithm="HS256")
-    return {'token': token}
+    return {'token': token, 'user': user.toJson()}
