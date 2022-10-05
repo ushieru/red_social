@@ -1,31 +1,29 @@
-from typing import List
-import json
 import uuid
-import hashlib
+from typing import List
 from sqlalchemy import select, and_
 from src.database.database import database
-from src.models.user_model import User
-
-
-def create_user(name: str, email: str, password: str) -> User:
-    uuid_str = str(uuid.uuid4())
-    hash_pass = hashlib.sha256(password.encode('utf-8')).hexdigest()
-    user = User(id=uuid_str, name=name, email=email, password=hash_pass)
-    database.add(user)
-    database.commit()
-    return user
-
-
-def get_user_auth(email: str, password: str) -> User:
-    hash_pass = hashlib.sha256(password.encode('utf-8')).hexdigest()
-    statement = select(User).where(
-        and_(User.email.is_(email), User.password.is_(hash_pass)))
-    result = database.execute(statement).fetchone()
-    if not result:
-        return None
-    return result[0]
+from src.models import User, FriendRequest
 
 
 def get_users(user: User) -> List[User]:
     statement = select(User).where(User.id.is_not(user.id))
     return database.execute(statement).scalars().all()
+
+
+def get_friend_requests(user: User) -> List[FriendRequest]:
+    statement = select(FriendRequest).where(
+        FriendRequest.user_target_id.is_(user.id))
+    return database.execute(statement).scalars().all()
+
+
+def add_friend(user: User, user_id: str) -> FriendRequest:
+    statement = select(FriendRequest).where(
+        and_(FriendRequest.user_target_id.is_(user.id), FriendRequest.user_source_id.is_(user_id)))
+    result = database.execute(statement).fetchone()
+    if result:
+        raise 'Add friend'
+    friend_request = FriendRequest(
+        id=str(uuid.uuid4()), user_source_id=user.id, user_target_id=user_id)
+    database.add(friend_request)
+    database.commit()
+    return friend_request
