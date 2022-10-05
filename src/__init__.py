@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
-from src.routes.auth import auth
+from src.routes import auth, users
 
 load_dotenv()
 
@@ -16,3 +16,4 @@ def index():
 
 
 app.register_blueprint(auth)
+app.register_blueprint(users)
