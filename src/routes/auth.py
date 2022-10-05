@@ -11,9 +11,7 @@ def register():
     json = request.get_json()
     name, email, password = itemgetter('name', 'email', 'password')(json)
     user = create_user(name, email, password)
-    return {
-        'user': user.toJson()
-    }
+    return {'user': user.toJson()}
 
 
 @auth.route('/login', methods=['POST'])
@@ -25,6 +23,4 @@ def login():
         return {}, 400
     token = jwt.encode(
         user.toJson(), "mysupersecretword", algorithm="HS256")
-    return {
-        'token': token
-    }
+    return {'token': token}
