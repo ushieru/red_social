@@ -1,5 +1,4 @@
-from src.models.user_model import User
+from src.models import User, FriendRequest
 from src.database import engine, Base
 
-if __name__ == '__main__':
-    Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)
