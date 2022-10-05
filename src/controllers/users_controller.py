@@ -1,3 +1,4 @@
+from typing import List
 import json
 import uuid
 import hashlib
@@ -23,3 +24,8 @@ def get_user_auth(email: str, password: str) -> User:
     if not result:
         return None
     return result[0]
+
+
+def get_users(user: User) -> List[User]:
+    statement = select(User).where(User.id.is_not(user.id))
+    return database.execute(statement).scalars().all()
