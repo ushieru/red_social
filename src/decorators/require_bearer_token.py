@@ -1,6 +1,8 @@
 from functools import wraps
+from operator import itemgetter
 from flask import request, current_app
 import jwt
+from src.models.user_model import User
 
 
 def require_bearer_token(f):
@@ -12,6 +14,9 @@ def require_bearer_token(f):
         _, token = auth.split(' ')
         if not token:
             return {'error': 'You should not be here'}, 401
-        jwt.decode(token, current_app.config['JWT_SECRET'], algorithms=["HS256"])
-        return f(*args, **kwargs)
+        user_payload = jwt.decode(
+            token, current_app.config['JWT_SECRET'], algorithms=["HS256"])
+        id_, name, email = itemgetter('id', 'name', 'email')(user_payload)
+        user = User(id=id_, name=name, email=email)
+        return f(user, *args, **kwargs)
     return decorated_function
