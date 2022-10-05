@@ -3,7 +3,7 @@ from src.database import Base
 
 
 class FriendRequest(Base):
-    __tablename__ = "friend"
+    __tablename__ = "friend_request"
 
     id = Column(String, primary_key=True, nullable=False)
     user_source_id = Column(String, nullable=False)
