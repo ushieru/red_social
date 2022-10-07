@@ -2,7 +2,7 @@
 import sys
 import os
 sys.path.append(os.getcwd())
-from src.controllers.users_controller import add_friend_request
+from src.controllers.friends_controller import add_friend_request
 from src.controllers.auth_controller import create_user
 
 if __name__ == '__main__':
