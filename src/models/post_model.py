@@ -8,7 +8,6 @@ class Post(Base):
     __tablename__ = "post"
 
     id = Column(String, primary_key=True, nullable=False)
-    id = Column(String, primary_key=True, nullable=False)
     user_id = Column(String, ForeignKey("user.id"))
     media = Column(String)
     description = Column(String)
