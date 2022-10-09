@@ -1,7 +1,8 @@
 from operator import itemgetter
 import jwt
 from flask import Blueprint, request, current_app
-from src.controllers.auth_controller import create_user, get_user_auth
+from src.controllers.auth_controller import get_user_auth
+from src.controllers.users_controller import create_user
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
