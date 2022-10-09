@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
-from src.routes import auth, users, friends, posts
+from src.routes import auth, users, friends, posts, assets
 
 load_dotenv()
 
@@ -19,3 +19,4 @@ app.register_blueprint(auth)
 app.register_blueprint(users)
 app.register_blueprint(friends)
 app.register_blueprint(posts)
+app.register_blueprint(assets)
