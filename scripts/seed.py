@@ -12,7 +12,7 @@ if __name__ == '__main__':
     user2 = create_user('Camryn Bala Stacey', 'camryn@email.com', 'camryn')
     user3 = create_user('Praise Onyekachi Heike', 'praise@email.com', 'praise')
 
-    create_post(user1, 'example.png', 'Hello dudes!')
+    create_post(user1, '30de534d-d1ea-4f3b-8f73-ba0957f96ad6.png', 'Hello dudes!')
     create_post(user1, '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
     create_post(user1, '', 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...')
 
