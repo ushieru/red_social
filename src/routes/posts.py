@@ -18,8 +18,10 @@ def index(user):
 def create(user):
     json = request.get_json()
     media, description = itemgetter('media', 'description')(json)
-    b64, ext = itemgetter('b64', 'ext')(media)
-    file_name = b64_to_file(b64, ext)
+    file_name = ''
+    if not media == '':
+        b64, ext = itemgetter('b64', 'ext')(media)
+        file_name = b64_to_file(b64, ext)
     post = create_post(user, file_name, description)
     return post.toJson()
 
