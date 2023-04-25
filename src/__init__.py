@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, send_from_directory
 from src.routes import auth, users, friends, posts, assets
+from src.database import engine, Base
+import src.models
 
 load_dotenv()
 
@@ -12,6 +14,11 @@ app.config['JWT_SECRET'] = os.getenv('JWT_SECRET')
 
 @app.route('/')
 def index():
+    return {'ok': 'ok'}
+
+@app.route('/migrations')
+def migrations():
+    Base.metadata.create_all(engine)
     return {'ok': 'ok'}
 
 
