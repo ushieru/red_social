@@ -13,15 +13,13 @@ class Post(Base):
     description = Column(String)
     create_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    user = relationship("User", foreign_keys=[user_id])
-
     def __repr__(self):
         return f"Post(id={self.id!r}, user_id={self.user_id!r}, media={self.media!r}, description={self.description!r})"
 
     def toJson(self):
         return {
             'id': self.id,
-            'user': self.user.toJson(),
+            'user': self.user_id,
             'media': self.media,
             'description': self.description
         }

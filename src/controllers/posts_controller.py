@@ -7,8 +7,8 @@ from src.models.user_model import User
 from src.models.friend_model import Friend
 
 
-def create_post(user: User, file_name: str, description: str) -> Post:
-    post = Post(id=str(uuid.uuid4()), user_id=user.id,
+def create_post(user_id: str, file_name: str, description: str) -> Post:
+    post = Post(id=str(uuid.uuid4()), user_id=user_id,
                 media=file_name, description=description)
     database.add(post)
     database.commit()
